@@ -21,4 +21,25 @@ class HomeController extends AbstractController
             'product' =>$product
         ]);
     }
+     /**
+     * @Route("/homepage/{id}", name="productDetail")
+     */
+    public function productDetailAction(ProductRepository $repo, int $id): Response
+    {
+        $product = $repo->find($id);
+        return $this->render("home_page/productdetail.html.twig",[
+            'product' =>$product
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="search")
+     */
+    public function searchAction(ProductRepository $repo): Response
+    {
+        $product = $repo->findAll();
+        return $this->render("home_page/search.html.twig",[
+            'product' =>$product
+        ]);
+    }
 }

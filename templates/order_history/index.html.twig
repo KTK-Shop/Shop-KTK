@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="main">
+                <div className="page-heading pb-2 mt-4 mb-2 ">
+                    <h3>Order History</h3> 
+                </div>
+                <div class="page-content">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+               
+                </div>
+                <div class="container mb-3">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">ProductName</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">OrderDate</th>
+                            <th scope="col">DeliveryDate</th>
+                            <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {# {% for p in product %} #}
+                                <tr>
+                                    <td><img src="../img/iphone_13_pro_max.jpg"
+                                     alt="" style="margin: auto; width: 20%;"></td>
+                                    <td>Name</td>
+                                    <td>Name</td>
+                                    <td>Name</td>
+                                    <td>Name</td>
+                                    <td>Name</td>
+                                    <td>Name</td>          
+                                    <td>
+                                        <a href="#" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Buy more </a>
+                                    </td>
+                                </tr>     
+
+                                
+                                {# {% endfor %} #}
+                        </tbody>
+                    </table>
+             </div>
+            </div>
+    </div>
+{% endblock %}

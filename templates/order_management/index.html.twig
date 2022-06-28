@@ -4,7 +4,7 @@
 
     <div id="main">
                 <div className="page-heading pb-2 mt-4 mb-2 ">
-                    <h3>Manager Product</h3> <a href="insert.php"><button type="button" class="btn btn-outline-primary">Insert</button></a>
+                    <h3>Manager Order</h3> <a href="insert.php"><button type="button" class="btn btn-outline-primary">Insert</button></a>
                 </div>
                 <div class="page-content">
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -15,24 +15,24 @@
                         <thead>
                             <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Descript</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">BrandName</th>
+                            <th scope="col">OrderDate</th>
+                            <th scope="col">DeliveryDate</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Payment</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">CustomerName</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for p in product %}
+                            {% for o in order %}
                                 <tr>
-                                    <td>{{p.productid}}</td>
-                                    <td>{{p.Productname}}</td>
-                                    <td>{{p.Price}}</td>
-                                    <td>{{p.Productdes}}</td>
-                                    <td>{{p.Productquantity}}</td>
-                                    <td>{{p.Productimage}}</td>
-                                    <td>{{p.Brandname}}</td>          
+                                    <td>{{o.id}}</td>
+                                    <td>{{o.Orderdate}}</td>
+                                    <td>{{o.Deliverydate}}</td>
+                                    <td>{{o.Address}}</td>
+                                    <td>{{o.Payment}}</td>
+                                    <td>{{o.Status}}</td>
+                                    <td>{{o.CustomerName}}</td>          
                                     <td>
                                         <a href="update.php?id=<?=$row['Product_ID']?>" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Update </a>
                                     </td>

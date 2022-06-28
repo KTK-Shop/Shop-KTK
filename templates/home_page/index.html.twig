@@ -47,10 +47,10 @@
                 width: 80%;"
               />
               <div class="card-body align-self-center">
-                <a href="{{ path('home_page', {'id' : p.id})}}" class="text-decoration-none"><h5 class="card-title text-center">{{p.Productname}}</h5></a>
-                <h6 class="card-subtitle mb-2 text-muted text-center"><span>&#8363;</span>{{p.Price}}</h6>
+                <a href="{{ path('productDetail', {'id' : p.id})}}" class="text-decoration-none"><h5 class="card-title text-center">{{p.Productname}}</h5></a>
+                <h6 class="card-subtitle mb-2 text-muted text-center"><span></span>{{p.Price}} VND</h6>
                 <a href="{{ path('home_page', {'id' : p.id})}}" class="btn btn-outline-danger">Like <i class="fa fa-heart-o"></i></a>
-                <a href="{{ path('addcart', {'id' : p.id})}}" class="btn btn-primary">Add to Cart <i class="fa fa-shopping-cart" style="font-size:20px"></i></i></a>
+                <a href="{{ path('home_page', {'id' : p.id})}}" class="btn btn-primary">Add to Cart <i class="fa fa-shopping-cart" style="font-size:20px"></i></i></a>
               </div>
             </div>
         </div>
