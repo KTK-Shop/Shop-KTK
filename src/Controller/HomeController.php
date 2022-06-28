@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-class HomePageController extends AbstractController
+class HomeController extends AbstractController
 {
     /**
      * @Route("/homepage", name="home_page")
