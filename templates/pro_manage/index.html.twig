@@ -3,8 +3,8 @@
 {% block body %}
 
     <div id="main">
-                <div className="page-heading pb-2 mt-4 mb-2 ">
-                    <h3>Manager Product</h3> <a href="insert.php"><button type="button" class="btn btn-outline-primary">Insert</button></a>
+                <div class="container">
+                    <h3>Manager Product</h3> <a href="{{path('addpromanage')}}"><button type="button" class="btn btn-outline-primary">Insert</button></a>
                 </div>
                 <div class="page-content">
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -20,7 +20,7 @@
                             <th scope="col">Descript</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Image</th>
-                            <th scope="col">BrandName</th>
+                            <th scope="col">BrandID</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,9 +32,10 @@
                                     <td>{{p.Productdes}}</td>
                                     <td>{{p.Productquantity}}</td>
                                     <td>{{p.Productimage}}</td>
-                                    <td>{{p.Brandname}}</td>          
+                                    <td>{{p.brandid}}</td>          
                                     <td>
-                                        <a href="update.php?id=<?=$row['Product_ID']?>" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Update </a>
+                                        <a href="{{path('updatepromanage',{'id' : p.productid})}}" class="btn rounded-pill text-light"
+                                         style="background-color: rgba(26,148,255,255);"> Update </a>
                                     </td>
                                 </tr>     
                                 {% endfor %}                        

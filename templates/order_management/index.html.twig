@@ -3,8 +3,8 @@
 {% block body %}
 
     <div id="main">
-                <div className="page-heading pb-2 mt-4 mb-2 ">
-                    <h3>Manager Order</h3> <a href="insert.php"><button type="button" class="btn btn-outline-primary">Insert</button></a>
+                <div class="container ">
+                    <h3>Manager Order</h3>
                 </div>
                 <div class="page-content">
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -20,21 +20,28 @@
                             <th scope="col">Address</th>
                             <th scope="col">Payment</th>
                             <th scope="col">Status</th>
-                            <th scope="col">CustomerName</th>
+                            <th scope="col">CustomerID</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for o in order %}
                                 <tr>
-                                    <td>{{o.id}}</td>
-                                    <td>{{o.Orderdate}}</td>
+                                    <td>{{o.Oid}}</td>
+                                    <td>{{o.Orderdate|date("m/d/Y")}}</td>
+                                    {% if o.Deliverydate == null %}
                                     <td>{{o.Deliverydate}}</td>
+                                    {% else %}
+                                    <td>{{o.Deliverydate|date("m/d/Y")}}</td>
+                                    {% endif %}
                                     <td>{{o.Address}}</td>
                                     <td>{{o.Payment}}</td>
                                     <td>{{o.Status}}</td>
-                                    <td>{{o.CustomerName}}</td>          
+                                    <td>{{o.user}}</td>          
                                     <td>
-                                        <a href="update.php?id=<?=$row['Product_ID']?>" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Update </a>
+                                        <a href="{{ path('updateorder', {'id' : o.Oid})}}" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Update </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('orderdetail', {'id' : o.Oid})}}" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Detail </a>
                                     </td>
                                 </tr>     
                                 {% endfor %}                        

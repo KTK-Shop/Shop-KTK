@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="main">
+                <div class="container">
+                    <h3>Order Detail</h3>
+                    <a href="{{path('app_order_management')}}"><button type="button" class="btn btn-outline-primary">Back to index</button></a>
+                </div>
+                <div class="page-content">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+               
+                </div>
+                <div class="container mb-3">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th scope="col">Order_ID</th>
+                            <th scope="col">OrderDetail_ID</th>
+                            <th scope="col">Product_ID</th>
+                            <th scope="col">Pro_Qty</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Total</th><span class="badge bg-info text-dark">Summary: </span>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                                      
+                        </tbody>
+                    </table>
+             </div>
+            </div>
+    </div>
+{% endblock %}

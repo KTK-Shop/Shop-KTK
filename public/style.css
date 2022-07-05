@@ -176,11 +176,7 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-<<<<<<< HEAD
     flex-direction: column;
-=======
-flex-direction: column;
->>>>>>> main
     justify-content: center;
     align-items: center;
     width: calc(100% + 15px);
@@ -348,11 +344,7 @@ flex-direction: column;
 
 body {
     font-family: 'Rubik', sans-serif;
-<<<<<<< HEAD
     font-size: 14px;
-=======
-font-size: 14px;
->>>>>>> main
     font-weight: 400;
     background: #FFFFFF;
     color: #000000
@@ -516,11 +508,7 @@ ul {
     display: -moz-box;
     display: -ms-flexbox;
     display: -webkit-flex;
-<<<<<<< HEAD
     display: flex;
-=======
-display: flex;
->>>>>>> main
     flex-direction: column;
     align-items: center;
     width: 100%;
@@ -552,10 +540,5 @@ display: flex;
 
 .nav-item {
     padding-bottom: 0px;
-<<<<<<< HEAD
 }
 
-
-=======
-}
->>>>>>> main

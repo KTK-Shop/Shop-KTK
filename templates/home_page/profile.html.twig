@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <h3>Update Account</h3>
+</div>
+<div class="container">
+{{ form_start(form) }}
+{{ form_row(form.username) }}
+{{ form_end(form) }}
+
+    <a href="{{path('confirmpassword')}}"><button type="button" class="btn btn-outline-primary">Change password</button></a>
+</div>
+<br>
+{% endblock %}

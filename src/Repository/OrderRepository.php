@@ -39,6 +39,34 @@ class OrderRepository extends ServiceEntityRepository
         }
     }
 
+    
+   /**
+    * @return Order[] Returns an array of Order objects
+    */
+   public function maxOrder()
+   {
+       return $this->createQueryBuilder('o')
+           ->select('MAX(o.id) as id')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+    /**
+    * @return Order[] Returns an array of Order objects
+    */
+    public function indexOrder()
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.id as Oid, o.Orderdate, o.Deliverydate, o.Address, 
+            o.Payment, o.Status, u.id as user')
+            ->innerJoin('o.user', 'u')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

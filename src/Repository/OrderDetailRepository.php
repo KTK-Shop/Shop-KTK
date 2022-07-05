@@ -39,6 +39,24 @@ class OrderDetailRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+    *@return OrderDetail[] Returns an array of OrderDetail objects
+    */
+    public function historyOrder($id)
+    {
+        return $this->createQueryBuilder('od')
+            ->select('o.Orderdate as orderdate, o.Deliverydate as deliverydate, 
+            o.Status as status, od.Total as total, od.Price as price, p.Productname as productname, 
+            p.Productimage as image, od.OderProQuan as quantity')
+            ->innerJoin('od.Orderid', 'o')
+            ->innerJoin('od.Productid', 'p')
+            ->where('o.user = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return OrderDetail[] Returns an array of OrderDetail objects
 //     */
