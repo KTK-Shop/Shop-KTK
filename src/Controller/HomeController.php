@@ -101,58 +101,58 @@ class HomeController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/confirmpassword", name="confirmpassword")
-    //  */
-    // public function confirmPasswordAction(): Response
-    // {
-    //     return $this->render('home_page/confirmpassword.htm.twig');
-    // }
+    /**
+     * @Route("/confirmpassword", name="confirmpassword")
+     */
+    public function confirmPasswordAction(): Response
+    {
+        return $this->render('home_page/confirmpassword.htm.twig');
+    }
 
-    // /**
-    //  * @Route("/temp", name="temp", methods="POST")
-    //  */
-    // public function tempAction(Request $req, 
-    // UserPasswordHasherInterface $hasher,
-    // ManagerRegistry $reg, UserRepository $urepo): Response
-    // {
-    //     $user = $this->getUser();
-    //     $oldpwd = $req->request->get('password');
-    //     $a = $hasher->isPasswordValid($user,$oldpwd);
-    //     if($a == true){
-    //         return $this->redirectToRoute('changepassword');
-    //     }
-    //     else{
-    //         return $this->redirectToRoute('confirmpassword');
-    //     }
-    // }
-    // /**
-    //  * @Route("/changepassword", name="changepassword")
-    //  */
-    // public function changePasswordAction(Request $req, 
-    // UserPasswordHasherInterface $hasher,
-    // ManagerRegistry $reg, UserRepository $urepo ): Response
-    // {
-    //     $user = $this->get('security.token_storage')->getToken()->getUser();
-    //     $user->getId();
-    //     $user = $urepo->find($user);
-    //     $form = $this->createForm(ChangePassType::class, $user);
-    //     $form->handleRequest($req);
-    //     $entity = $reg->getManager();
+    /**
+     * @Route("/temp", name="temp", methods="POST")
+     */
+    public function tempAction(Request $req, 
+    UserPasswordHasherInterface $hasher,
+    ManagerRegistry $reg, UserRepository $urepo): Response
+    {
+        $user = $this->getUser();
+        $oldpwd = $req->request->get('password');
+        $a = $hasher->isPasswordValid($user,$oldpwd);
+        if($a == true){
+            return $this->redirectToRoute('changepassword');
+        }
+        else{
+            return $this->redirectToRoute('confirmpassword');
+        }
+    }
+    /**
+     * @Route("/changepassword", name="changepassword")
+     */
+    public function changePasswordAction(Request $req, 
+    UserPasswordHasherInterface $hasher,
+    ManagerRegistry $reg, UserRepository $urepo ): Response
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getId();
+        $user = $urepo->find($user);
+        $form = $this->createForm(ChangePassType::class, $user);
+        $form->handleRequest($req);
+        $entity = $reg->getManager();
 
-    //     if($form->isSubmitted() && $form->isValid()){
-    //         $user->setPassword($hasher->hashPassword($user,
-    //         $form->get('password')->getData()));
+        if($form->isSubmitted() && $form->isValid()){
+            $user->setPassword($hasher->hashPassword($user,
+            $form->get('password')->getData()));
 
-    //         $entity->persist($user);
-    //         $entity->flush();
+            $entity->persist($user);
+            $entity->flush();
 
-    //         return $this->redirectToRoute('home_page');
-    //     }
+            return $this->redirectToRoute('home_page');
+        }
         
-    //     return $this->render('home_page/changepass.html.twig', [
-    //         'form' => $form->createView()
-    //     ]);  
-    // }
+        return $this->render('home_page/changepass.html.twig', [
+            'form' => $form->createView()
+        ]);  
+    }
 
 }
