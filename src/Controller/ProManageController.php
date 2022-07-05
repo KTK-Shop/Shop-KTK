@@ -14,16 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProManageController extends AbstractController
 {
-    // /**
-    //  * @Route("/promanage", name="app_pro_manage")
-    //  */
-    // public function indexAction(ProductRepository $repo): Response
-    // {
-    //     $product = $repo->indexProduct();
-    //     return $this->render('pro_manage/index.html.twig', [
-    //         'product' =>$product
-    //     ]);
-    // }
+    /**
+     * @Route("/promanage", name="app_pro_manage")
+     */
+    public function indexAction(ProductRepository $repo): Response
+    {
+        $product = $repo->indexProduct();
+        return $this->render('pro_manage/index.html.twig', [
+            'product' =>$product
+        ]);
+    }
 
     /**
      * @Route("/addpromanage", name="addpromanage")
