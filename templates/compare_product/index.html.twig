@@ -1,55 +1,30 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-
 <div class="container">
   <H2>Compare Product</H2>
   <br>
   <div class="row" style="background-color: aliceblue;">
-      {# {% for p in product %} #}
-      
+     {% for p in product %}
         <div class="col-md-6">
             <div class="card">
             <br>
               <img 
-                src="../img/iphone_13_pro_max.jpg"
+                src="../img/{{p.Productimage}}"
                 class="card-img-top"
                 alt="Not image available" style="margin: auto;
                 width: 40%;"
               />
               <div class="card-body align-self-center">
-                <h6 class="card-subtitle mb-2 text-muted text-center"><span></span>ProductName</h6>
-                <h6 class="card-subtitle mb-2 text-muted text-center"><span></span>Description</h6>
-
+                <h4 class="card-subtitle mb-2 text-muted text-center"><span></span>{{p.Productname}}</h4>
+                <h6 class="card-subtitle mb-2 text-muted text-center"><span></span>{{p.Price}} VND</h6>
+                <h6 class="card-subtitle mb-2 text-muted text-center"><span></span>{{p.Productdes}}</h6>
               </div>
             </div>
         </div>
       <br>
-    {# {% endfor %} #}
-
-     {# {% for p in product %} #}
-        <div class="col-md-6">
-            <div class="card">
-            <br>
-              <img 
-                src="../img/iphone_13_pro_max.jpg"
-                class="card-img-top"
-                alt="Not image available" style="margin: auto;
-                width: 40%;"
-              />
-              <div class="card-body align-self-center">
-                <h6 class="card-subtitle mb-2 text-muted text-center"><span></span>ProductName</h6>
-                <h6 class="card-subtitle mb-2 text-muted text-center"><span></span>Description</h6>
-
-              </div>
-            </div>
-        </div>
-      <br>
-    {# {% endfor %} #}
+    {% endfor %}
   </div>  
-  {# all product #}
-
 </div>
-
+<br>
 {% endblock %}

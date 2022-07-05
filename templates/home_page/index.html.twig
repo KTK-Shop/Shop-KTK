@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-
-    <div class="container">
+  <br>
+  <div class="container">
   <H2>New Product</H2>
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -36,10 +36,11 @@
   <br>
   {# all product #}
   <div class="row" style="background-color: aliceblue;">
-      <!-- product1 -->
-      {% for p in product %}
+      <!-- product1 -->     
+      {% for p in product %} 
         <div class="col-md-4">
             <div class="card">
+               <br>
               <img 
                 src="./img/{{p.Productimage}}"
                 class="card-img-top"
@@ -49,14 +50,52 @@
               <div class="card-body align-self-center">
                 <a href="{{ path('productDetail', {'id' : p.id})}}" class="text-decoration-none"><h5 class="card-title text-center">{{p.Productname}}</h5></a>
                 <h6 class="card-subtitle mb-2 text-muted text-center"><span></span>{{p.Price}} VND</h6>
-                <a href="{{ path('home_page', {'id' : p.id})}}" class="btn btn-outline-danger">Like <i class="fa fa-heart-o"></i></a>
-                <a href="{{ path('home_page', {'id' : p.id})}}" class="btn btn-primary">Add to Cart <i class="fa fa-shopping-cart" style="font-size:20px"></i></i></a>
+                {% if app.user %}
+                <a href="{{ path('addcart', {'id' : p.id})}}" class="btn btn-primary">Add to Cart <i class="fa fa-shopping-cart" style="font-size:20px"></i></i></a>
+                {% else %}
+                <a href="{{ path('app_login')}}" class="btn btn-primary">Add to Cart <i class="fa fa-shopping-cart" style="font-size:20px"></i></i></a>
+                {% endif %}  
+                  <form>
+                  <input class="form-check-input" name ="checkbox" type="checkbox" value = "{{p.id}}" id="checkBox{{p.id}}">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Add to compare
+                  </label>
+                <script language="javascript">
+                  var compareList = [];
+                    document.getElementById("checkBox{{p.id}}").onclick = function(e){
+                      if (this.checked){
+                        if(compareList.length < 2)
+                        {
+                          compareList.unshift({{p.id}});
+                          document.getElementById("proA").value = compareList[0];
+                          document.getElementById("proB").value = compareList[1];
+                        }
+                        else{
+                          alert('Max 2 products');
+                          document.getElementById("checkBox{{p.id}}").checked = false;
+                        }
+                      }
+                      else{
+                        for (i = 0; i < compareList.length; ++i){
+                          if(compareList[i] == {{p.id}}){
+                            compareList.splice(i, 1);
+                          }
+                        }
+                      }
+                };
+                </script>
+                </form>
               </div>
             </div>
         </div>
       <br>
     {% endfor %}
   </div>  
+   <form method="GET" action="{{ path("app_compare") }}">
+      <input style= "display: none;" name="proA" id="proA" value="">
+      <input style= "display: none;" name="proB" id="proB" value="">
+      <input name="compareBtn" id="compareBtn" class="btn text-light" style= "background-color: rgba(13,92,182,255 );" type="submit" value="Compare"/>  
+  </form>
   {# all product #}
 
 </div>

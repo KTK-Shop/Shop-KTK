@@ -17,6 +17,7 @@
                             <th scope="col">Image</th>
                             <th scope="col">ProductName</th>
                             <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
                             <th scope="col">Total</th>
                             <th scope="col">OrderDate</th>
                             <th scope="col">DeliveryDate</th>
@@ -24,22 +25,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {# {% for p in product %} #}
+                            {% for h in history %}
                                 <tr>
-                                    <td><img src="../img/iphone_13_pro_max.jpg"
+                                    <td><img src="../img/{{h.image}}"
                                      alt="" style="margin: auto; width: 20%;"></td>
-                                    <td>Name</td>
-                                    <td>Name</td>
-                                    <td>Name</td>
-                                    <td>Name</td>
-                                    <td>Name</td>
-                                    <td>Name</td>          
+                                    <td>{{h.productname}}</td>
+                                    <td>{{h.quantity}}</td>
+                                    <td>{{h.price}}</td>
+                                    <td>{{h.total}}</td>
+                                    <td>{{h.orderdate|date("m/d/Y")}}</td> 
+                                    {% if h.deliverydate == null %}
+                                    <td>{{h.deliverydate}}</td>
+                                    {% else %}
+                                    <td>{{h.deliverydate|date("m/d/Y")}}</td>
+                                    {% endif %}
+                                    {% if h.status == 0 %}
+                                    <td>Delivering </td> 
+                                    {% else %}
+                                    <td>Delivered </td>   
+                                    {% endif %}     
                                     <td>
-                                        <a href="#" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Buy more </a>
+                                        <a href="{{ path('productDetail', {'id' : h.id})}}" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Buy more </a>
                                     </td>
                                 </tr>     
-
-                                
+                            {% endfor %}    
                                 {# {% endfor %} #}
                         </tbody>
                     </table>

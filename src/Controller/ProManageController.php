@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Form\AddProManageType;
+use App\Form\UpdateProManageType;
 use App\Repository\ProductRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,22 +39,21 @@ class ProManageController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
+            $file = $form->get('Productimage')->getData()->getClientOriginalName();
 
             $product->setProductname($data->getProductname());
             $product->setPrice($data->getPrice());
             $product->setProductdes($data->getProductdes());
             $product->setProductdate($data->getProductdate());
             $product->setProductquantity($data->getProductquantity());
-            $product->setProductimage($data->getProductimage());
+            $product->setProductimage($file);
             $product->setBrandid($data->getBrandid());
             $product->setStatus($data->getStatus());
 
             $entity->persist($product);
             $entity->flush();
 
-            return $this->json([
-                'id' => $product->getId()
-            ]);
+            return $this->redirectToRoute('app_pro_manage', []);
         }
         return $this->render('pro_manage/add.html.twig', [
             'form' => $form->createView()
@@ -67,20 +67,28 @@ class ProManageController extends AbstractController
     {
         $product = $repo->find($id);
 
-        $form = $this->createForm(AddProManageType::class, $product);
+        $form = $this->createForm(UpdateProManageType::class, $product);
 
         $form->handleRequest($req);
         $entity = $res->getManager();
 
         if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
+            $file = $req->request->get('file');
+                      
 
             $product->setProductname($data->getProductname());
             $product->setPrice($data->getPrice());
             $product->setProductdes($data->getProductdes());
             $product->setProductdate($data->getProductdate());
             $product->setProductquantity($data->getProductquantity());
-            $product->setProductimage($data->getProductimage());
+            if($file){
+                $product->setProductimage($file);
+            }
+            else{
+                $oldimg = $req->request->get('oldimg');
+                $product->setProductimage($oldimg);
+            }
             $product->setBrandid($data->getBrandid());
             $product->setStatus($data->getStatus());
 
@@ -88,9 +96,11 @@ class ProManageController extends AbstractController
             $entity->flush();
 
             return $this->redirectToRoute('app_pro_manage', []);
+
         }
-        return $this->render('pro_manage/add.html.twig', [
-            'form' => $form->createView()
+        return $this->render('pro_manage/update.html.twig', [
+            'form' => $form->createView(),
+            'p' => $product
         ]);
     }
 

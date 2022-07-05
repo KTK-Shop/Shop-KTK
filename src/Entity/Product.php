@@ -60,11 +60,6 @@ class Product
     private $Brandid;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cart::class, mappedBy="Productid")
-     */
-    private $Cartid;
-
-    /**
      * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="Productid")
      */
     private $Orderdetailid;
@@ -74,10 +69,17 @@ class Product
      */
     private $Status;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CartDetail::class, mappedBy="product")
+     */
+    private $cartdetail;
+
     public function __construct()
     {
         $this->Cartid = new ArrayCollection();
         $this->Orderdetailid = new ArrayCollection();
+        $this->cart = new ArrayCollection();
+        $this->cartdetail = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,36 +184,6 @@ class Product
     }
 
     /**
-     * @return Collection<int, Cart>
-     */
-    public function getCartid(): Collection
-    {
-        return $this->Cartid;
-    }
-
-    public function addCartid(Cart $cartid): self
-    {
-        if (!$this->Cartid->contains($cartid)) {
-            $this->Cartid[] = $cartid;
-            $cartid->setProductid($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCartid(Cart $cartid): self
-    {
-        if ($this->Cartid->removeElement($cartid)) {
-            // set the owning side to null (unless already changed)
-            if ($cartid->getProductid() === $this) {
-                $cartid->setProductid(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, OrderDetail>
      */
     public function getOrderdetailid(): Collection
@@ -249,6 +221,36 @@ class Product
     public function setStatus(int $Status): self
     {
         $this->Status = $Status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CartDetail>
+     */
+    public function getCartdetail(): Collection
+    {
+        return $this->cartdetail;
+    }
+
+    public function addCartdetail(CartDetail $cartdetail): self
+    {
+        if (!$this->cartdetail->contains($cartdetail)) {
+            $this->cartdetail[] = $cartdetail;
+            $cartdetail->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCartdetail(CartDetail $cartdetail): self
+    {
+        if ($this->cartdetail->removeElement($cartdetail)) {
+            // set the owning side to null (unless already changed)
+            if ($cartdetail->getProduct() === $this) {
+                $cartdetail->setProduct(null);
+            }
+        }
 
         return $this;
     }

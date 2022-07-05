@@ -54,6 +54,49 @@ class ProductRepository extends ServiceEntityRepository
        ;
    }
 
+   /**
+    * @return Product[] Returns an array of Product objects
+    */
+    public function findProductByName($productname)
+   {
+       return $this->createQueryBuilder('p')
+            ->select('p.id, p.Productname, p.Price, p.Productimage')
+           ->Where('p.Productname LIKE :productname')
+           ->setParameter('productname', "%${productname}%")
+           ->andWhere('p.Status = 1')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+      /**
+    * @return Product[] Returns an array of Product objects
+    */
+    public function imageProduct($id)
+    {
+        $entity = $this->getEntityManager();
+        return $entity->createQuery('
+        SELECT p.Productimage, p.Productquantity as quantity FROM App\Entity\Product p WHERE p.id = :id
+        ') ->setParameter('id', $id)
+        ->getArrayResult()
+        ;
+    }
+
+      /**
+    * @return Product[] Returns an array of Product objects
+    */
+    public function compareProducts($proIdA, $proIdB)
+   {
+       return $this->createQueryBuilder('p')
+            ->select('p.Productname, p.Price, p.Productimage, p.Productdes')
+           ->Where('p.id = :proIdA OR p.id = :proIdB')
+           ->setParameter('proIdA', "$proIdA")
+           ->setParameter('proIdB', "$proIdB")
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
 
 //    /**
 //     * @return Product[] Returns an array of Product objects
