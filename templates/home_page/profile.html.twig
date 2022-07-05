@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <form class="d-flex" method="POST" action="/changepassword">
+        <input class="btn text-light" style= "background-color: rgba(13,92,182,255);" type="submit" value="Search"/> 
+    </form>
+{{ form_start(form) }}
+{{ form_row(form.username) }}
+{{ form_end(form) }}
+</div>
+{% endblock %}

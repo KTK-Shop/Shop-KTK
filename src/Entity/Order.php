@@ -46,14 +46,14 @@ class Order
     private $Status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="Orderid")
-     */
-    private $Customerid;
-
-    /**
      * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="Orderid")
      */
     private $Orderdetailid;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="orderid")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -83,7 +83,7 @@ class Order
         return $this->Deliverydate;
     }
 
-    public function setDeliverydate(\DateTimeInterface $Deliverydate): self
+    public function setDeliverydate(?\DateTimeInterface $Deliverydate): self
     {
         $this->Deliverydate = $Deliverydate;
 
@@ -126,17 +126,6 @@ class Order
         return $this;
     }
 
-    public function getCustomerid(): ?Customer
-    {
-        return $this->Customerid;
-    }
-
-    public function setCustomerid(?Customer $Customerid): self
-    {
-        $this->Customerid = $Customerid;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, OrderDetail>
@@ -164,6 +153,18 @@ class Order
                 $orderdetailid->setOrderid(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

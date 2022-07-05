@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if error == 1 %}
+  <div class="alert alert-danger">Please add a product to the cart before ordering!!!</div>
+{% endif %}
     <section class="h-100 h-custom" style="background-color: #f7f7f7;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -14,28 +17,63 @@
                     <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
                     <h6 class="mb-0 text-muted"></h6>
                   </div>
-                  <hr class="my-4">
-                  <div class="row mb-4 d-flex justify-content-between align-items-center">
+{# title of row #}
+                <div class="row mb-4 d-flex justify-content-between align-items-center">
                   <div class="col-md-2 col-lg-2 col-xl-2">
-                    <img src="./img/" class="img-fluid rounded-3" alt="">
+                    <h5>Images</h5>
                   </div>
                   <div class="col-md-3 col-lg-3 col-xl-3">
-                    <h6 class="text-black mb-0"></h6>
+                    <h5>Product Name</h5>
                   </div>
+                  {# <div class="col-md-3 col-lg-3 col-xl-3">
+                    <h5>Unit price</h5>
+                  </div> #}
                   <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                    <input id="form1" min="0" name="quantity" value="" type="number"
-                      class="form-control form-control-sm" />
+                    <h5>Quantity</h5>
+                  </div>
+                  <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                   </div>
                   <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                    <h6 class="mb-0"><span>VND</span></h6>
+                    <h5>Unit Price</h5>
                   </div>
-                  
                   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                    <a href="#" class="text-muted text-decoration-none">x</a>
                   </div>
                 </div>
                   <hr class="my-4">
-
+{# content of cart #}
+      {% for c in cart %}
+                <div class="row mb-4 d-flex justify-content-between align-items-center">
+                  <div class="col-md-2 col-lg-2 col-xl-2">
+                    <img 
+                      src="./img/{{c.Productimage}}"
+                      class="img-fluid rounded-3" alt="image not avaible">
+                  </div>
+                  <div class="col-md-3 col-lg-3 col-xl-3">
+                    <h6 class="text-black mb-0">{{c.Productname}}</h6>
+                  </div>
+                  {# <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                    <h6 class="mb-0"><span>&#8363;</span> {{c.Price}} </h6>
+                  </div> #}
+                  <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                    <form class="d-flex" method="GET" action="/updatecart/{{c.id}}">
+                    <input id="form1" min="0" name="quantity" value = {{c.Productquantity}} type="number"
+                      class="form-control form-control-sm" style="width: 65px"/>
+                    <input class="btn text-light" style= "background-color: rgba(13,92,182,255);" type="submit" value="Update"/> 
+                </form>
+                    
+                  </div>
+                  {# <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                    <a href="{{ path('updatecart', {'id' : c.id})}}" class="text-muted text-decoration-none"><i class="fa fa-pencil-square-o" style="font-size: 20px; color: blue;"></i></i></a>
+                  </div> #}
+                  <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                    <h6 class="mb-0"><span>&#8363;</span> {{c.Price}} </h6>
+                  </div>
+                  <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                    <a href="{{ path('deletecart', {'id' : c.id})}}" class="text-muted text-decoration-none"><i class="fa fa-trash" style="font-size: 20px; color: gray;"></i></a>
+                  </div>
+                </div>
+                <hr class="my-4">
+    {% endfor %}
                   <div class="pt-5">
                     <h6 class="mb-0"><a class="text-body" href="{{path('home_page')}}"><i
                         class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
@@ -46,15 +84,15 @@
                 <div class="p-5">
                   <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
                   <hr class="my-4">
-
                   <div class="d-flex justify-content-between mb-5">
                     <h5 class="text-uppercase">Total price</h5>
-                    <h5><span>VND</span></h5>
+                    <h5><span>&#8363;</span>{{total}}</h5>
                   </div>
-                  <form class="d-flex" method="POST">
-                    <a href="#" class="btn text-light " style= "background-color: rgba(13,92,182,255);" type="submit" value="Payment" name="payment">Order</a> 
+                  <form class="d-flex" method="">
+                    <a href="{{path('order')}}" class="btn text-light " style= "background-color: rgba(13,92,182,255);" type="submit" value="Payment" name="payment">Order</a> 
                 </form>
                 </div>
+                {# {{path('order')}} #}
               </div>
             </div>
           </div>
@@ -64,5 +102,3 @@
   </div>
 </section>
 {% endblock %}
-
-

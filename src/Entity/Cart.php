@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CartRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,59 +20,67 @@ class Cart
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity=CartDetail::class, mappedBy="cart")
      */
-    private $Productquantity;
+    private $cartdetail;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="Cartid")
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Customerid;
+    private $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Product::class, inversedBy="Cartid")
-     */
-    private $Productid;
+
+    public function __construct()
+    {
+        $this->cartdetail = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getProductquantity(): ?int
+    public function getUser(): ?User
     {
-        return $this->Productquantity;
+        return $this->user;
     }
 
-    public function setProductquantity(int $Productquantity): self
+    public function setUser(?User $user): self
     {
-        $this->Productquantity = $Productquantity;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getCustomerid(): ?Customer
+    /**
+     * @return Collection<int, CartDetail>
+     */
+    public function getCartdetail(): Collection
     {
-        return $this->Customerid;
+        return $this->cartdetail;
     }
 
-    public function setCustomerid(?Customer $Customerid): self
+    public function addCartdetail(CartDetail $cartdetail): self
     {
-        $this->Customerid = $Customerid;
+        if (!$this->cartdetail->contains($cartdetail)) {
+            $this->cartdetail[] = $cartdetail;
+            $cartdetail->setCart($this);
+        }
 
         return $this;
     }
 
-    public function getProductid(): ?Product
+    public function removeCartdetail(CartDetail $cartdetail): self
     {
-        return $this->Productid;
-    }
-
-    public function setProductid(?Product $Productid): self
-    {
-        $this->Productid = $Productid;
+        if ($this->cartdetail->removeElement($cartdetail)) {
+            // set the owning side to null (unless already changed)
+            if ($cartdetail->getCart() === $this) {
+                $cartdetail->setCart(null);
+            }
+        }
 
         return $this;
     }
+
 }

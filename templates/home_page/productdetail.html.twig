@@ -21,8 +21,9 @@
                         
                         <div><span class="product_info"><span>Decription: {{product.Productdes}}</div>                        
                         <hr class="singleline">
-                        <div class="order_info d-flex flex-row">
-                            <form action="#">
+                        <div class="card-body align-self-center">
+                            <a href="{{ path('addcart', {'id' : product.id})}}" class="btn btn-primary">Add to Cart <i class="fa fa-shopping-cart" style="font-size:20px"></i></a>
+                        </div>
                         </div>
                     </div>
                 </div>
