@@ -45,10 +45,11 @@
                                     <td>Delivered </td>   
                                     {% endif %}     
                                     <td>
-                                        <a href="#" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Buy more </a>
+                                        <a href="{{ path('productDetail', {'id' : h.id})}}" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Buy more </a>
                                     </td>
                                 </tr>     
                             {% endfor %}    
+                                {# {% endfor %} #}
                         </tbody>
                     </table>
              </div>

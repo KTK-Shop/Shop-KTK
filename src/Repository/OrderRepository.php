@@ -66,6 +66,20 @@ class OrderRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+    * @return Order[] Returns an array of Order objects
+    */
+    public function payOrder($id)
+    {
+        return $this->createQueryBuilder('o')
+            ->select('o.Payment as payment')
+            ->where('o.id = :id' )
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 //    /**
 //     * @return Order[] Returns an array of Order objects

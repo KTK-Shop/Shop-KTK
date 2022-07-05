@@ -20,12 +20,20 @@
                             <th scope="col">Product_ID</th>
                             <th scope="col">Pro_Qty</th>
                             <th scope="col">Price</th>
-                            <th scope="col">Total</th>
-                            <span class="badge bg-info text-dark">Summary: </span>
+                            <th scope="col">Total</th><span class="badge bg-info text-dark">Summary: {{payment}} VND</span>
                             </tr>
                         </thead>
                         <tbody>
-                                            
+                            {% for d in detail %}
+                            <tr>
+                            <td>{{d.order}}</td>
+                            <td>{{d.odid}}</td>
+                            <td>{{d.product}}</td>
+                            <td>{{d.quantity}}</td>
+                            <td>{{d.price}}</td>
+                            <td>{{d.total}}</td>
+                            </tr>
+                            {% endfor %}   
                         </tbody>
                     </table>
              </div>

@@ -24,20 +24,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotBlank
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
-     * @Assert\NotBlank
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
      * @Assert\Length(
      * min = 8,
      * max = 25,
@@ -49,7 +46,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank 
      */
     private $Fullname;
 
@@ -60,31 +56,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
      */
     private $Address;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
      */
     private $Telephone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
      */
     private $Email;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\NotBlank
      */
     private $Birthdate;
 
     /**
      * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user")
-     * @Assert\NotBlank
      */
     private $orderid;
 

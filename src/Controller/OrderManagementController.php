@@ -26,13 +26,16 @@ class OrderManagementController extends AbstractController
 
     
     /**
-     * @Route("/orderdetail", name="orderdetail")
+     * @Route("/orderdetail/{id}", name="orderdetail")
      */
-    public function orderDetailAction(OrderDetailRepository $repo): Response
+    public function orderDetailAction(OrderDetailRepository $repo, int $id, OrderRepository $orepo): Response
     {
-        $detail =$repo->findAll();
+        $detail =$repo->showOrderDetail($id);
+        $pay = $orepo->payOrder($id);
+        $pays = $pay[0]['payment'];
         return $this->render('order_management/detail.html.twig', [
-            'orer_detail' => $detail
+            'detail' => $detail,
+            'payment' =>$pays
         ]);
     }
 

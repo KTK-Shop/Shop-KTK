@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\ChangePasswordType;
+use App\Form\ChangePassType;
 use App\Form\ProfileType;
 use App\Form\UserType;
 use App\Repository\CartRepository;
@@ -89,19 +89,6 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/changepassword", name="changepassword")
-     */
-    public function changePasswordAction(UserPasswordHasherInterface $hasher, Request $req, 
-    ManagerRegistry $reg, UserRepository $repo ): Response
-    {
-        $user = $this->getUser();
-        $oldpwd = $req->request->get('password');
-        $a = $hasher->isPasswordValid($user,$oldpwd);
-
-        return new Response('abc');
-    }
-
-    /**
      * @Route("/compare", name="app_compare")
      */
     public function compareAction(ProductRepository $repo, CartRepository $cartRepo, Request $req): Response
@@ -121,4 +108,51 @@ class HomeController extends AbstractController
     {
         return $this->render('home_page/confirmpassword.htm.twig');
     }
+
+    /**
+     * @Route("/temp", name="temp", methods="POST")
+     */
+    public function tempAction(Request $req, 
+    UserPasswordHasherInterface $hasher,
+    ManagerRegistry $reg, UserRepository $urepo): Response
+    {
+        $user = $this->getUser();
+        $oldpwd = $req->request->get('password');
+        $a = $hasher->isPasswordValid($user,$oldpwd);
+        if($a == true){
+            return $this->redirectToRoute('changepassword');
+        }
+        else{
+            return $this->redirectToRoute('confirmpassword');
+        }
+    }
+    /**
+     * @Route("/changepassword", name="changepassword")
+     */
+    public function changePasswordAction(Request $req, 
+    UserPasswordHasherInterface $hasher,
+    ManagerRegistry $reg, UserRepository $urepo ): Response
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getId();
+        $user = $urepo->find($user);
+        $form = $this->createForm(ChangePassType::class, $user);
+        $form->handleRequest($req);
+        $entity = $reg->getManager();
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user->setPassword($hasher->hashPassword($user,
+            $form->get('password')->getData()));
+
+            $entity->persist($user);
+            $entity->flush();
+
+            return $this->redirectToRoute('home_page');
+        }
+        
+        return $this->render('home_page/changepass.html.twig', [
+            'form' => $form->createView()
+        ]);  
+    }
+
 }

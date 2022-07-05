@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType {
+class ChangePassType extends AbstractType {
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -22,7 +22,6 @@ class UserType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
             ->add('password', RepeatedType::class,[
                 'type' =>PasswordType::class,
                 'invalid_message' => 'Not match',
@@ -31,14 +30,6 @@ class UserType extends AbstractType {
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Confirm Password']
                 
-            ])
-            ->add('fullname', TextType::class)
-            ->add('gender', TextType::class)
-            ->add('address', )
-            ->add('telephone')
-            ->add('email')
-            ->add('birthdate', DateType::class,[
-                'widget' => 'single_text'
             ])
             ->add('save', SubmitType::class, [
                 'label' => "Save"
