@@ -19,27 +19,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CartController extends AbstractController
 {
-    // /**
-    //  * @Route("/cart", name="app_cart")
-    //  */
-    // public function indexAction(CartRepository $cartrepo): Response
-    // {
-    //     $user = $this->get('security.token_storage')->getToken()->getUser();
-    //     $a = $user->getId();
-    //     $cart = $cartrepo->findOneBy(['user'=>$a]);
+    /**
+     * @Route("/cart", name="app_cart")
+     */
+    public function indexAction(CartRepository $cartrepo): Response
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $a = $user->getId();
+        $cart = $cartrepo->findOneBy(['user'=>$a]);
 
-    //     $carts = $cartrepo->showCart($a, $cart); 
-    //     $bc = $cartrepo->sumCart($a, $cart);
-    //     $n = $bc[0]['total'];
+        $carts = $cartrepo->showCart($a, $cart); 
+        $bc = $cartrepo->sumCart($a, $cart);
+        $n = $bc[0]['total'];
 
-    //     $error = 0;
+        $error = 0;
 
-    //     return $this->render("cart/index.html.twig",[
-    //         'cart' =>$carts,
-    //         'total'=>$n,
-    //         'error' => $error
-    //     ]);
-    // }
+        return $this->render("cart/index.html.twig",[
+            'cart' =>$carts,
+            'total'=>$n,
+            'error' => $error
+        ]);
+    }
 
     /**
      * @Route("/addcart/{id}", name="addcart")
