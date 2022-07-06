@@ -107,95 +107,95 @@ class CartController extends AbstractController
         return $this->redirectToRoute('app_cart');
     }
 
-    // /**
-    //  * @Route("/order", name="order")
-    //  */
-    // public function orderAction(CartRepository $cartrepo, ManagerRegistry $reg, 
-    // UserRepository $urepo, OrderRepository $orepo, ProductRepository $prorepo, CartDetailRepository $cdrepo): Response
-    // {
-    //     $user = $this->get('security.token_storage')->getToken()->getUser();
-    //     $a = $user->getId();
-    //     $addUser = $urepo->orderUser($user);
-    //     $addusers = $addUser[0]['address'];
+    /**
+     * @Route("/order", name="order")
+     */
+    public function orderAction(CartRepository $cartrepo, ManagerRegistry $reg, 
+    UserRepository $urepo, OrderRepository $orepo, ProductRepository $prorepo, CartDetailRepository $cdrepo): Response
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $a = $user->getId();
+        $addUser = $urepo->orderUser($user);
+        $addusers = $addUser[0]['address'];
 
-    //     $cart = $cartrepo->findOneBy(['user'=>$a]);
+        $cart = $cartrepo->findOneBy(['user'=>$a]);
 
-    //     $bc = $cartrepo->sumCart($a, $cart);
-    //     $totals = $bc[0]['total'];
-    //     $entity = $reg->getManager();
+        $bc = $cartrepo->sumCart($a, $cart);
+        $totals = $bc[0]['total'];
+        $entity = $reg->getManager();
 
-    //     $order = new Order();
+        $order = new Order();
 
-    //     $order->setOrderdate(new \DateTime());
-    //     $order->setAddress($addusers);
-    //     $order->setPayment($totals);
-    //     $order->setStatus(0);
-    //     $order->setUser($user);
+        $order->setOrderdate(new \DateTime());
+        $order->setAddress($addusers);
+        $order->setPayment($totals);
+        $order->setStatus(0);
+        $order->setUser($user);
 
-    //     $entity->persist($order);
-    //     $entity->flush();
+        $entity->persist($order);
+        $entity->flush();
 
-    //     $count = $cdrepo->countCart($cart);
-    //     $counts = $count[0]['count'];
+        $count = $cdrepo->countCart($cart);
+        $counts = $count[0]['count'];
 
-    //     $cart = $cdrepo->addCart($cart);
+        $cart = $cdrepo->addCart($cart);
 
-    //     $orderid = $orepo->maxOrder();
-    //     $max = $orderid[0]['id'];
-    //     $maxid = $orepo->find($max);
+        $orderid = $orepo->maxOrder();
+        $max = $orderid[0]['id'];
+        $maxid = $orepo->find($max);
 
-    //     for($i = 0; $i < $counts; $i++){
+        for($i = 0; $i < $counts; $i++){
 
-    //         $detail = new OrderDetail();
+            $detail = new OrderDetail();
 
-    //         $quantity = $cart[$i]['quantity'];
-    //         $detail->setOderProQuan($quantity);
+            $quantity = $cart[$i]['quantity'];
+            $detail->setOderProQuan($quantity);
 
-    //         $price = $cart[$i]['price'];
-    //         $detail->setPrice($price);
+            $price = $cart[$i]['price'];
+            $detail->setPrice($price);
 
-    //         $total = $cart[$i]['total'];
-    //         $detail->setTotal($total);
+            $total = $cart[$i]['total'];
+            $detail->setTotal($total);
 
-    //         $detail->setOrderid($maxid);
+            $detail->setOrderid($maxid);
 
-    //         $productid = $cart[$i]['proid'];
-    //         $proid = $prorepo->find($productid);
-    //         $detail->setProductid($proid);
+            $productid = $cart[$i]['proid'];
+            $proid = $prorepo->find($productid);
+            $detail->setProductid($proid);
 
-    //         $entity->persist($detail);
-    //         $entity->flush();
+            $entity->persist($detail);
+            $entity->flush();
 
-    //         $product = $prorepo->imageProduct($productid);
-    //         $quanpro = $product[0]['quantity'];
+            $product = $prorepo->imageProduct($productid);
+            $quanpro = $product[0]['quantity'];
 
-    //         $pro = $prorepo->find($productid);
+            $pro = $prorepo->find($productid);
 
-    //         $pro->setProductquantity($quanpro-$quantity);
+            $pro->setProductquantity($quanpro-$quantity);
 
-    //         $entity->persist($pro);
-    //         $entity->flush();
-    //     }
+            $entity->persist($pro);
+            $entity->flush();
+        }
 
-    //     for($i = 0; $i < $counts; $i++){
-    //         $productid = $cart[$i]['proid'];
-    //         $proid = $prorepo->find($productid);
+        for($i = 0; $i < $counts; $i++){
+            $productid = $cart[$i]['proid'];
+            $proid = $prorepo->find($productid);
 
-    //         $quantity = $cart[$i]['proquantity'] - $cart[$i]['quantity'];
+            $quantity = $cart[$i]['proquantity'] - $cart[$i]['quantity'];
 
-    //         $proid->setProductquantity($quantity);
+            $proid->setProductquantity($quantity);
 
-    //         $entity->persist($proid);
-    //         $entity->flush();
-    //     }
+            $entity->persist($proid);
+            $entity->flush();
+        }
 
-    //     for($i = 0; $i < $counts; $i++){
-    //         $cartid = $cart[$i]['cdid'];
-    //         $delete = $cdrepo->find($cartid);
-    //         $entity->remove($delete);
-    //         $entity->flush($delete);
-    //     }
+        for($i = 0; $i < $counts; $i++){
+            $cartid = $cart[$i]['cdid'];
+            $delete = $cdrepo->find($cartid);
+            $entity->remove($delete);
+            $entity->flush($delete);
+        }
 
-    //     return $this->redirectToRoute('home_page');
-    // }
+        return $this->redirectToRoute('home_page');
+    }
 }
