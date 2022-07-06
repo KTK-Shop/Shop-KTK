@@ -11,17 +11,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-// class BrandManagementController extends AbstractController
-// {
-//     /**
-//      * @Route("/brand/management", name="app_brand_management")
-//      */
-//     public function indexAction(BrandRepository $repo): Response
-//     {   $brand = $repo->FindAll();
-//         return $this->render('brand_management/index.html.twig', [
-//             'brand' => $brand
-//         ]);
-//     }
+class BrandManagementController extends AbstractController
+{
+    /**
+     * @Route("/brand/management", name="app_brand_management")
+     */
+    public function indexAction(BrandRepository $repo): Response
+    {   $brand = $repo->FindAll();
+        return $this->render('brand_management/index.html.twig', [
+            'brand' => $brand
+        ]);
+    }
 
 //     /**
 //      * @Route("/addbrandmanage", name="addbrandmanage")
@@ -84,4 +84,4 @@ use Symfony\Component\Routing\Annotation\Route;
 //             'form' => $form->createView()
 //         ]);
 //     }
-// }
+}
