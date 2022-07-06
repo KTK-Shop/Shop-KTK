@@ -38,74 +38,74 @@ class CartController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/addcart/{id}", name="addcart")
-    //  */
-    // public function addCartAction( int $id, ManagerRegistry $res, ProductRepository $repo,
-    // CartRepository $cartrepo, CartDetailRepository $caderepo ): Response
-    // {
-    //     $entity = $res->getManager();
+    /**
+     * @Route("/addcart/{id}", name="addcart")
+     */
+    public function addCartAction( int $id, ManagerRegistry $res, ProductRepository $repo,
+    CartRepository $cartrepo, CartDetailRepository $caderepo ): Response
+    {
+        $entity = $res->getManager();
 
-    //     $cartdetail = new CartDetail();
+        $cartdetail = new CartDetail();
 
-    //     $user = $this->get('security.token_storage')->getToken()->getUser();
-    //     $user->getId();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getId();
         
-    //     $cart = $cartrepo->findOneBy(['user'=>$user]);
-    //     $ca = $caderepo->checkCartDetail($id, $cart);
+        $cart = $cartrepo->findOneBy(['user'=>$user]);
+        $ca = $caderepo->checkCartDetail($id, $cart);
 
-    //     $product = $repo->find($id);
+        $product = $repo->find($id);
         
-    //     if($ca[0]['count'] == 0){
-    //         $cartdetail->setQuantity(1);
-    //         $cartdetail->setCart($cart);
-    //         $cartdetail->setProduct($product);
+        if($ca[0]['count'] == 0){
+            $cartdetail->setQuantity(1);
+            $cartdetail->setCart($cart);
+            $cartdetail->setProduct($product);
 
-    //         $entity->persist($cartdetail);
-    //         $entity->flush();
-    //     }
-    //     else {           
-    //         $quantity = $ca[0]['quantity'] + 1;
+            $entity->persist($cartdetail);
+            $entity->flush();
+        }
+        else {           
+            $quantity = $ca[0]['quantity'] + 1;
 
-    //             $id = $ca[0]['id'];
-    //         $cartdetail = $caderepo->find($id);
-    //         $cartdetail->setQuantity($quantity);
-    //         $entity->persist($cartdetail);
-    //         $entity->flush();
-    //     } 
+                $id = $ca[0]['id'];
+            $cartdetail = $caderepo->find($id);
+            $cartdetail->setQuantity($quantity);
+            $entity->persist($cartdetail);
+            $entity->flush();
+        } 
         
-    //     return $this->redirectToRoute('home_page');
-    // }
+        return $this->redirectToRoute('home_page');
+    }
 
-    // /**
-    //  * @Route("/deletecart/{id}", name="deletecart")
-    //  */
-    // public function deleteCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo): Response
-    // {
-    //     $entity = $res->getManager();
-    //     $cartdetail = $caderepo->find($id);
+    /**
+     * @Route("/deletecart/{id}", name="deletecart")
+     */
+    public function deleteCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo): Response
+    {
+        $entity = $res->getManager();
+        $cartdetail = $caderepo->find($id);
 
-    //     $entity->remove($cartdetail);
-    //     $entity->flush($cartdetail);
-    //     return $this->redirectToRoute('app_cart');
-    // }
+        $entity->remove($cartdetail);
+        $entity->flush($cartdetail);
+        return $this->redirectToRoute('app_cart');
+    }
 
-    // /**
-    //  * @Route("/updatecart/{id}", name="updatecart")
-    //  */
-    // public function updateCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo, Request $req): Response
-    // {
-    //     $quantity = $req->query->get('quantity');
+    /**
+     * @Route("/updatecart/{id}", name="updatecart")
+     */
+    public function updateCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo, Request $req): Response
+    {
+        $quantity = $req->query->get('quantity');
         
-    //     $entity = $res->getManager();
-    //     $cartdetail = $caderepo->find($id);
+        $entity = $res->getManager();
+        $cartdetail = $caderepo->find($id);
 
-    //     $cartdetail->setQuantity($quantity);
+        $cartdetail->setQuantity($quantity);
 
-    //     $entity->persist($cartdetail);
-    //     $entity->flush();
-    //     return $this->redirectToRoute('app_cart');
-    // }
+        $entity->persist($cartdetail);
+        $entity->flush();
+        return $this->redirectToRoute('app_cart');
+    }
 
     // /**
     //  * @Route("/order", name="order")
