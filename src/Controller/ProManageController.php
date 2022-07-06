@@ -28,39 +28,39 @@ class ProManageController extends AbstractController
     /**
      * @Route("/addpromanage", name="addpromanage")
      */
-    // public function addProManageAction(Request $req, ManagerRegistry $res): Response
-    // {
-    //     $product = new Product();
+    public function addProManageAction(Request $req, ManagerRegistry $res): Response
+    {
+        $product = new Product();
 
-    //     $form = $this->createForm(AddProManageType::class, $product);
+        $form = $this->createForm(AddProManageType::class, $product);
 
-    //     $form->handleRequest($req);
-    //     $entity = $res->getManager();
+        $form->handleRequest($req);
+        $entity = $res->getManager();
 
-    //     if($form->isSubmitted() && $form->isValid()){
-    //         $data = $form->getData();
-    //         $file = $form->get('Productimage')->getData()->getClientOriginalName();
+        if($form->isSubmitted() && $form->isValid()){
+            $data = $form->getData();
+            $file = $form->get('Productimage')->getData()->getClientOriginalName();
 
-    //         $product->setProductname($data->getProductname());
-    //         $product->setPrice($data->getPrice());
-    //         $product->setProductdes($data->getProductdes());
-    //         $product->setProductdate($data->getProductdate());
-    //         $product->setProductquantity($data->getProductquantity());
-    //         $product->setProductimage($file);
-    //         $product->setBrandid($data->getBrandid());
-    //         $product->setStatus($data->getStatus());
+            $product->setProductname($data->getProductname());
+            $product->setPrice($data->getPrice());
+            $product->setProductdes($data->getProductdes());
+            $product->setProductdate($data->getProductdate());
+            $product->setProductquantity($data->getProductquantity());
+            $product->setProductimage($file);
+            $product->setBrandid($data->getBrandid());
+            $product->setStatus($data->getStatus());
 
-    //         $entity->persist($product);
-    //         $entity->flush();
+            $entity->persist($product);
+            $entity->flush();
 
-    //         return $this->redirectToRoute('app_pro_manage', []);
-    //     }
-    //     return $this->render('pro_manage/add.html.twig', [
-    //         'form' => $form->createView()
-    //     ]);
-    // }
+            return $this->redirectToRoute('app_pro_manage', []);
+        }
+        return $this->render('pro_manage/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 
-        /**
+    /**
      * @Route("/updatepromanage/{id}", name="updatepromanage")
      */
     public function updateProManageAction(Request $req, ManagerRegistry $res, int $id, ProductRepository $repo): Response
