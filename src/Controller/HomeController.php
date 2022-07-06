@@ -55,38 +55,38 @@ class HomeController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/profile", name="profile")
-    //  */
-    // public function profileAction(Request $req, ManagerRegistry $reg, UserRepository $repo): Response
-    // {
-    //     $user = $this->get('security.token_storage')->getToken()->getUser();
-    //     $user->getId();
-    //     $user = $repo->find($user);
-    //     $form = $this->createForm(ProfileType::class, $user);
-    //     $form->handleRequest($req);
-    //     $entity = $reg->getManager();
+    /**
+     * @Route("/profile", name="profile")
+     */
+    public function profileAction(Request $req, ManagerRegistry $reg, UserRepository $repo): Response
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getId();
+        $user = $repo->find($user);
+        $form = $this->createForm(ProfileType::class, $user);
+        $form->handleRequest($req);
+        $entity = $reg->getManager();
 
-    //     if($form->isSubmitted() && $form->isValid()){
-    //         $data=$form->getData();
+        if($form->isSubmitted() && $form->isValid()){
+            $data=$form->getData();
 
-    //         $user->setFullname($data->getFullname());
-    //         $user->setGender($data->getGender());
-    //         $user->setAddress($data->getAddress());
-    //         $user->setTelephone($data->getTelephone());
-    //         $user->setEmail($data->getEmail());
-    //         $user->setBirthdate($data->getBirthdate());
+            $user->setFullname($data->getFullname());
+            $user->setGender($data->getGender());
+            $user->setAddress($data->getAddress());
+            $user->setTelephone($data->getTelephone());
+            $user->setEmail($data->getEmail());
+            $user->setBirthdate($data->getBirthdate());
 
-    //         $entity->persist($user);
-    //         $entity->flush();
+            $entity->persist($user);
+            $entity->flush();
 
-    //         return $this->redirectToRoute('home_page');
-    //     }
+            return $this->redirectToRoute('home_page');
+        }
 
-    //     return $this->render('home_page/profile.html.twig', [
-    //         'form' => $form->createView()
-    //     ]);       
-    // }
+        return $this->render('home_page/profile.html.twig', [
+            'form' => $form->createView()
+        ]);       
+    }
 
     /**
      * @Route("/compare", name="app_compare")
