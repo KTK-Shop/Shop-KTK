@@ -39,43 +39,43 @@ class OrderManagementController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/updateorder/{id}", name="updateorder")
-    //  */
-    // public function updateOrderAction(Request $req, ManagerRegistry $res, OrderRepository $orepo, int $id ): Response
-    // {
-    //     $order = $orepo->find($id);
+    /**
+     * @Route("/updateorder/{id}", name="updateorder")
+     */
+    public function updateOrderAction(Request $req, ManagerRegistry $res, OrderRepository $orepo, int $id ): Response
+    {
+        $order = $orepo->find($id);
 
-    //     $form = $this->createForm(UpdateOrderType::class, $order);
+        $form = $this->createForm(UpdateOrderType::class, $order);
 
-    //     $form->handleRequest($req);
-    //     $entity = $res->getManager();
+        $form->handleRequest($req);
+        $entity = $res->getManager();
 
-    //     if($form->isSubmitted()&& $form->isValid()){
-    //         $data = $form->getData();
+        if($form->isSubmitted()&& $form->isValid()){
+            $data = $form->getData();
 
-    //         $order->setAddress($data->getAddress());
-    //         $order->setPayment($data->getPayment());
-    //         $order->setStatus($data->getStatus());
+            $order->setAddress($data->getAddress());
+            $order->setPayment($data->getPayment());
+            $order->setStatus($data->getStatus());
 
-    //         $time = null;
-    //         if($data->getStatus() == 1){
-    //             $time = new \DateTime();
-    //             $order->setDeliverydate($time);
-    //         }
-    //         else{
-    //             $order->setDeliverydate(null);
-    //         }
+            $time = null;
+            if($data->getStatus() == 1){
+                $time = new \DateTime();
+                $order->setDeliverydate($time);
+            }
+            else{
+                $order->setDeliverydate(null);
+            }
 
             
 
-    //         $entity->persist($order);
-    //         $entity->flush($order);
+            $entity->persist($order);
+            $entity->flush($order);
 
-    //         return $this->redirectToRoute('app_order_management');
-    //     }
-    //     return $this->render('order_management/update.html.twig', [
-    //         'form' => $form->createView()
-    //     ]);
-    // }
+            return $this->redirectToRoute('app_order_management');
+        }
+        return $this->render('order_management/update.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }
