@@ -28,45 +28,45 @@ class AccountMamagementController extends AbstractController
         ]);
     }
 
-    // /**
-    //  * @Route("/addaccountadmin", name="addaccountadmin")
-    //  */
-    // public function registerAction(Request $req, 
-    // UserPasswordHasherInterface $hasher,
-    // ManagerRegistry $reg): Response
-    // {
-    //     $user = new User();
-    //     $form = $this->createForm(UserType::class, $user);
-    //     $form->handleRequest($req);
-    //     $entity = $reg->getManager();
+    /**
+     * @Route("/addaccountadmin", name="addaccountadmin")
+     */
+    public function registerAction(Request $req, 
+    UserPasswordHasherInterface $hasher,
+    ManagerRegistry $reg): Response
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($req);
+        $entity = $reg->getManager();
 
-    //     if($form->isSubmitted() && $form->isValid()){
-    //         $data=$form->getData();
-    //         $user->setPassword($hasher->hashPassword($user,
-    //         $form->get('password')->getData()));
+        if($form->isSubmitted() && $form->isValid()){
+            $data=$form->getData();
+            $user->setPassword($hasher->hashPassword($user,
+            $form->get('password')->getData()));
 
-    //         $user->setRoles(['ROLE_ADMIN']);
-    //         $user->setFullname($data->getFullname());
-    //         $user->setGender($data->getGender());
-    //         $user->setAddress($data->getAddress());
-    //         $user->setTelephone($data->getTelephone());
-    //         $user->setEmail($data->getEmail());
-    //         $user->setBirthdate($data->getBirthdate());
+            $user->setRoles(['ROLE_ADMIN']);
+            $user->setFullname($data->getFullname());
+            $user->setGender($data->getGender());
+            $user->setAddress($data->getAddress());
+            $user->setTelephone($data->getTelephone());
+            $user->setEmail($data->getEmail());
+            $user->setBirthdate($data->getBirthdate());
 
-    //         $entity->persist($user);
-    //         $entity->flush();
+            $entity->persist($user);
+            $entity->flush();
 
-    //         $cart = new Cart();
-    //         $cart->setUser($user);
+            $cart = new Cart();
+            $cart->setUser($user);
 
-    //         $entity->persist($cart);
-    //         $entity->flush();
+            $entity->persist($cart);
+            $entity->flush();
 
-    //         return $this->redirectToRoute('app_account_mamagement');
-    //     }
+            return $this->redirectToRoute('app_account_mamagement');
+        }
 
-    //     return $this->render('account_mamagement/add.html.twig', [
-    //         'form' => $form->createView()
-    //     ]);
-    // }
+        return $this->render('account_mamagement/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 }
