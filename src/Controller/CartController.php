@@ -67,7 +67,7 @@ class CartController extends AbstractController
         else {           
             $quantity = $ca[0]['quantity'] + 1;
 
-                $id = $ca[0]['id'];
+            $id = $ca[0]['id'];
             $cartdetail = $caderepo->find($id);
             $cartdetail->setQuantity($quantity);
             $entity->persist($cartdetail);
@@ -80,10 +80,17 @@ class CartController extends AbstractController
     /**
      * @Route("/deletecart/{id}", name="deletecart")
      */
-    public function deleteCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo): Response
+    public function deleteCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo
+    , CartRepository $cartrepo): Response
     {
         $entity = $res->getManager();
-        $cartdetail = $caderepo->find($id);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getId();
+        
+        $cart = $cartrepo->findOneBy(['user'=>$user]);
+        $ca = $caderepo->checkCartDetail($id, $cart);
+        $ids = $ca[0]['id'];
+        $cartdetail = $caderepo->find($ids);
 
         $entity->remove($cartdetail);
         $entity->flush($cartdetail);
@@ -93,12 +100,19 @@ class CartController extends AbstractController
     /**
      * @Route("/updatecart/{id}", name="updatecart")
      */
-    public function updateCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo, Request $req): Response
+    public function updateCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo
+    , Request $req, CartRepository $cartrepo): Response
     {
         $quantity = $req->query->get('quantity');
         
         $entity = $res->getManager();
-        $cartdetail = $caderepo->find($id);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user->getId();
+        
+        $cart = $cartrepo->findOneBy(['user'=>$user]);
+        $ca = $caderepo->checkCartDetail($id, $cart);
+        $ids = $ca[0]['id'];
+        $cartdetail = $caderepo->find($ids);
 
         $cartdetail->setQuantity($quantity);
 

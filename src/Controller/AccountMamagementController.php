@@ -16,18 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AccountMamagementController extends AbstractController
 {
-    // /**
-    //  * @Route("/account/mamagement", name="app_account_mamagement")
-    //  */
-    // public function indexAction(UserRepository $repo): Response
-    // {
-    //     $account = $repo->allAccount("ROLE");
+    /**
+     * @Route("/account/mamagement", name="app_account_mamagement")
+     */
+    public function indexAction(UserRepository $repo): Response
+    {
+        $account = $repo->allAccount("ROLE");
 
-    //     return $this->render('account_mamagement/index.html.twig', [
-    //         'account' => $account
-    //     ]);
-    //     // return $this->json($account);
-    // }
+        return $this->render('account_mamagement/index.html.twig', [
+            'account' => $account
+        ]);
+    }
 
     // /**
     //  * @Route("/addaccountadmin", name="addaccountadmin")
