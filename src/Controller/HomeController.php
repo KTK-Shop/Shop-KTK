@@ -101,17 +101,17 @@ class HomeController extends AbstractController
         return new Response('abc');
     }
 
-    // /**
-    //  * @Route("/compare", name="app_compare")
-    //  */
-    // public function compareAction(ProductRepository $repo, CartRepository $cartRepo, Request $req): Response
-    // {
-    //     $a = $req->query->get('proA');
-    //     $b = $req->query->get('proB');
-    //     $compareProduct = $repo->compareProducts($a, $b);
-    //     return $this->render('compare_product/index.html.twig', [
-    //     'product' => $compareProduct
-    //     ]);
-    // }
+    /**
+     * @Route("/compare", name="app_compare")
+     */
+    public function compareAction(ProductRepository $repo, CartRepository $cartRepo, Request $req): Response
+    {
+        $a = $req->query->get('proA');
+        $b = $req->query->get('proB');
+        $compareProduct = $repo->compareProducts($a, $b);
+        return $this->render('compare_product/index.html.twig', [
+        'product' => $compareProduct
+        ]);
+    }
 
 }
