@@ -9,15 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrderHistoryController extends AbstractController
 {
-    // /**
-    //  * @Route("/order/history", name="app_order_history")
-    //  */
-    // public function indexAction(OrderDetailRepository $repo): Response
-    // {
-    //     $user = $this->getUser();
-    //     $history = $repo->historyOrder($user);
-    //     return $this->render('order_history/index.html.twig', [
-    //         'history' => $history
-    //     ]);
-    // }
+    /**
+     * @Route("/order/history", name="app_order_history")
+     */
+    public function indexAction(OrderDetailRepository $repo): Response
+    {
+        $user = $this->getUser();
+        $history = $repo->historyOrder($user);
+        return $this->render('order_history/index.html.twig', [
+            'history' => $history
+        ]);
+    }
 }
