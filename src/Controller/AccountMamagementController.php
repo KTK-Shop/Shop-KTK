@@ -26,7 +26,6 @@ class AccountMamagementController extends AbstractController
         return $this->render('account_mamagement/index.html.twig', [
             'account' => $account
         ]);
-        // return $this->json($account);
     }
 
     /**
