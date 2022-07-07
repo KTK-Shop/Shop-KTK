@@ -23,65 +23,65 @@ class BrandManagementController extends AbstractController
         ]);
     }
 
-//     /**
-//      * @Route("/addbrandmanage", name="addbrandmanage")
-//      */
-//     public function addBrandManageAction(Request $req, ManagerRegistry $res): Response
-//     {
-//         $brand = new Brand();
+    /**
+     * @Route("/addbrandmanage", name="addbrandmanage")
+     */
+    public function addBrandManageAction(Request $req, ManagerRegistry $res): Response
+    {
+        $brand = new Brand();
 
-//         $form = $this->createForm(BrandManageType::class, $brand);
+        $form = $this->createForm(BrandManageType::class, $brand);
 
-//         $form->handleRequest($req);
-//         $entity = $res->getManager();
+        $form->handleRequest($req);
+        $entity = $res->getManager();
 
-//         if($form->isSubmitted()&& $form->isValid()){
-//             $data = $form->getData();
+        if($form->isSubmitted()&& $form->isValid()){
+            $data = $form->getData();
 
-//             $brand->setBrandname($data->getBrandname());
-//             $brand->setBranddes($data->getBranddes());
-//             $brand->setStatus($data->getStatus());
+            $brand->setBrandname($data->getBrandname());
+            $brand->setBranddes($data->getBranddes());
+            $brand->setStatus($data->getStatus());
 
-//             $entity->persist($brand);
-//             $entity->flush();
+            $entity->persist($brand);
+            $entity->flush();
 
-//             return $this->json([
-//                 'id' => $brand->getId()
-//             ])
-//             ;
-//         }
-//         return $this->render('brand_management/add.html.twig',[
-//             'form' => $form->createView()
-//         ]);
-//     }
+            return $this->json([
+                'id' => $brand->getId()
+            ])
+            ;
+        }
+        return $this->render('brand_management/add.html.twig',[
+            'form' => $form->createView()
+        ]);
+    }
 
-//     /**
-//      * @Route("updatebrandmanage/{id}", name="updatebrandmanage")
-//      */
-//     public function updateBrandManageAction(BrandRepository $repo,int $id,Request $req, ManagerRegistry $res): Response
-//     {
-//         $brand = $repo->find($id);
+    /**
+     * @Route("updatebrandmanage/{id}", name="updatebrandmanage")
+     */
+    public function updateBrandManageAction(BrandRepository $repo,int $id,Request $req, ManagerRegistry $res): Response
+    {
+        $brand = $repo->find($id);
 
-//         $form = $this->createForm(BrandManageType::class, $brand);
+        $form = $this->createForm(BrandManageType::class, $brand);
 
-//         $form->handleRequest($req);
-//         $entity = $res->getManager();
+        $form->handleRequest($req);
+        $entity = $res->getManager();
 
-//         if($form->isSubmitted()&& $form->isValid()){
-//             $data = $form->getData();
+        if($form->isSubmitted()&& $form->isValid()){
+            $data = $form->getData();
 
-//             $brand->setBrandname($data->getBrandname());
-//             $brand->setBranddes($data->getBranddes());
-//             $brand->setStatus($data->getStatus());
+            $brand->setBrandname($data->getBrandname());
+            $brand->setBranddes($data->getBranddes());
+            $brand->setStatus($data->getStatus());
 
-//             $entity->persist($brand);
-//             $entity->flush();
+            $entity->persist($brand);
+            $entity->flush();
 
-//             return $this->redirectToRoute('app_brand_management')
-//             ;
-//         }
-//         return $this->render('brand_management/update.html.twig',[
-//             'form' => $form->createView()
-//         ]);
-//     }
+            return $this->redirectToRoute('app_brand_management')
+            ;
+        }
+        return $this->render('brand_management/update.html.twig',[
+            'form' => $form->createView()
+        ]);
+    }
 }
