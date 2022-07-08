@@ -3,6 +3,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,7 +23,14 @@ class ProfileType extends AbstractType {
         $builder
             ->add('username')
             ->add('fullname', TextType::class)
-            ->add('gender', TextType::class)
+            ->add('Gender', ChoiceType::class, 
+            [
+                'choices' => [
+                    'Male' => 'Male',
+                    'Female' => 'Female',
+                ],
+                'expanded' => true
+            ])
             ->add('address', )
             ->add('telephone')
             ->add('email')

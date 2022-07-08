@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<main style="min-height: calc(100vh - 116px - 56px - 246px);">
 <div class="container">
     <h3>Update Account</h3>
 </div>
@@ -12,4 +13,5 @@
     <a href="{{path('confirmpassword')}}"><button type="button" class="btn btn-outline-primary">Change password</button></a>
 </div>
 <br>
+</main>
 {% endblock %}
