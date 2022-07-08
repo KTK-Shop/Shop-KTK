@@ -67,8 +67,6 @@ class OrderManagementController extends AbstractController
                 $order->setDeliverydate(null);
             }
 
-            
-
             $entity->persist($order);
             $entity->flush($order);
 

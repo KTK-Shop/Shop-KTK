@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{% if error == 1 %}
+  <div class="alert alert-danger">Please add a product to the cart before ordering!!!</div>
+{% endif %}
     <section class="h-100 h-custom" style="background-color: #f7f7f7;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
