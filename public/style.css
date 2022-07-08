@@ -15,6 +15,10 @@
     content: ">"
 }
 
+main{
+    min-height: calc(100vh - 116px - 56px - 246px);
+}
+
 .breadcrumb {
     display: -ms-flexbox;
     display: flex;

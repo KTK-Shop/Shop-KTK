@@ -3,6 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+
 <form method="post">
 <div class="container"
     {% if error %}
@@ -14,7 +15,7 @@
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %} #}
-
+<br>
     <h1>Sign in</h1>
     <br>
     <label for="inputUsername">Username</label>
