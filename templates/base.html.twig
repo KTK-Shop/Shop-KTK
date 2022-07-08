@@ -63,11 +63,8 @@
         </div>
   </div>
 </nav>
-
-       <nav class="navbar navbar-expand-lg" style="background-color: black;">
-       {# style="background-color: rgba(26,148,255,255);" #}
+<nav class="navbar navbar-expand-lg" style="background-color: rgba(26,148,255,255);">   
   <div class="container-fluid">
-  <a class="navbar-brand text-light">KTK-Shop</a>
     <a class="navbar-brand text-light" href="{{path('home_page')}}"><img src="../img/Logo_KTK_Shop.png" width="160" height="90" alt="Image not available"></a>
     <a class="navbar-toggler"  data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler"style="background-color: rgba(26,148,255,255);"><i class="fa fa-bars text-light" ></i></span>
@@ -103,8 +100,7 @@
             <li class="nav-item"> 
                 <form class="d-flex" method="GET" action="/search">
                     <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search" name="search" value="">
-                    <input class="btn btn btn-primary text-light"  type="submit" value="Search"/> 
-                    {# style= "background-color: rgba(13,92,182,255);" #}
+                    <input class="btn btn btn-primary text-light" style= "background-color: rgba(13,92,182,255);" type="submit" value="Search"/>      
                 </form>
             </li>                 
         </ul>          
@@ -115,7 +111,7 @@
         {% endblock %}
         {% block body %}
         {% endblock %}
-        {# {% block footer %}
+        {% block footer %}
     <div class=" text-center text-lg-start text-light" style="background-color: rgba(26,148,255,255);">
   <div class="container p-4 " >
     <div class="row">
@@ -149,5 +145,5 @@
     <a class="text-light" href="{{path('home_page')}}">KTK_shop.Com</a>
   </div>
     </div>
-    {% endblock %} #}
+    {% endblock %}
 </html> 

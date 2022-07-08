@@ -45,9 +45,7 @@ class BrandManagementController extends AbstractController
             $entity->persist($brand);
             $entity->flush();
 
-            return $this->json([
-                'id' => $brand->getId()
-            ])
+            return $this->redirectToRoute('app_brand_management')
             ;
         }
         return $this->render('brand_management/add.html.twig',[

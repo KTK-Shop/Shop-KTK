@@ -32,9 +32,12 @@ class CartController extends AbstractController
         $bc = $cartrepo->sumCart($a, $cart);
         $n = $bc[0]['total'];
 
+        $error = 0;
+
         return $this->render("cart/index.html.twig",[
             'cart' =>$carts,
-            'total'=>$n
+            'total'=>$n,
+            'error' => $error
         ]);
     }
 
@@ -124,78 +127,100 @@ class CartController extends AbstractController
         $totals = $bc[0]['total'];
         $entity = $reg->getManager();
 
-        $order = new Order();
-
-        $order->setOrderdate(new \DateTime());
-        $order->setAddress($addusers);
-        $order->setPayment($totals);
-        $order->setStatus(0);
-        $order->setUser($user);
-
-        $entity->persist($order);
-        $entity->flush();
-
         $count = $cdrepo->countCart($cart);
         $counts = $count[0]['count'];
 
-        $cart = $cdrepo->addCart($cart);
+        $error = 0;
 
-        $orderid = $orepo->maxOrder();
-        $max = $orderid[0]['id'];
-        $maxid = $orepo->find($max);
+        if($counts > 0){
+            $order = new Order();
 
-        for($i = 0; $i < $counts; $i++){
-
-            $detail = new OrderDetail();
-
-            $quantity = $cart[$i]['quantity'];
-            $detail->setOderProQuan($quantity);
-
-            $price = $cart[$i]['price'];
-            $detail->setPrice($price);
-
-            $total = $cart[$i]['total'];
-            $detail->setTotal($total);
-
-            $detail->setOrderid($maxid);
-
-            $productid = $cart[$i]['proid'];
-            $proid = $prorepo->find($productid);
-            $detail->setProductid($proid);
-
-            $entity->persist($detail);
+            $order->setOrderdate(new \DateTime());
+            $order->setAddress($addusers);
+            $order->setPayment($totals);
+            $order->setStatus(0);
+            $order->setUser($user);
+    
+            $entity->persist($order);
             $entity->flush();
+    
+            $cart = $cdrepo->addCart($cart);
+    
+            $orderid = $orepo->maxOrder();
+            $max = $orderid[0]['id'];
+            $maxid = $orepo->find($max);
+    
+            for($i = 0; $i < $counts; $i++){
+    
+                $detail = new OrderDetail();
+    
+                $quantity = $cart[$i]['quantity'];
+                $detail->setOderProQuan($quantity);
+    
+                $price = $cart[$i]['price'];
+                $detail->setPrice($price);
+    
+                $total = $cart[$i]['total'];
+                $detail->setTotal($total);
+    
+                $detail->setOrderid($maxid);
+    
+                $productid = $cart[$i]['proid'];
+                $proid = $prorepo->find($productid);
+                $detail->setProductid($proid);
+    
+                $entity->persist($detail);
+                $entity->flush();
+    
+                $product = $prorepo->imageProduct($productid);
+                $quanpro = $product[0]['quantity'];
+    
+                $pro = $prorepo->find($productid);
+    
+                $pro->setProductquantity($quanpro-$quantity);
+    
+                $entity->persist($pro);
+                $entity->flush();
+            }
+    
+            for($i = 0; $i < $counts; $i++){
+                $productid = $cart[$i]['proid'];
+                $proid = $prorepo->find($productid);
+    
+                $quantity = $cart[$i]['proquantity'] - $cart[$i]['quantity'];
+    
+                $proid->setProductquantity($quantity);
+    
+                $entity->persist($proid);
+                $entity->flush();
+            }
+    
+            for($i = 0; $i < $counts; $i++){
+                $cartid = $cart[$i]['cdid'];
+                $delete = $cdrepo->find($cartid);
+                $entity->remove($delete);
+                $entity->flush($delete);
+            }
+            
+            return $this->redirectToRoute('home_page');
 
-            $product = $prorepo->imageProduct($productid);
-            $quanpro = $product[0]['quantity'];
-
-            $pro = $prorepo->find($productid);
-
-            $pro->setProductquantity($quanpro-$quantity);
-
-            $entity->persist($pro);
-            $entity->flush();
         }
-
-        for($i = 0; $i < $counts; $i++){
-            $productid = $cart[$i]['proid'];
-            $proid = $prorepo->find($productid);
-
-            $quantity = $cart[$i]['proquantity'] - $cart[$i]['quantity'];
-
-            $proid->setProductquantity($quantity);
-
-            $entity->persist($proid);
-            $entity->flush();
+        else{
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $a = $user->getId();
+            $cart = $cartrepo->findOneBy(['user'=>$a]);
+    
+            $carts = $cartrepo->showCart($a, $cart); 
+            $bc = $cartrepo->sumCart($a, $cart);
+            $n = $bc[0]['total'];
+    
+            $error = 1;
+    
+            return $this->render("cart/index.html.twig",[
+                'cart' =>$carts,
+                'total'=>$n,
+                'error' => $error
+            ]);
         }
-
-        for($i = 0; $i < $counts; $i++){
-            $cartid = $cart[$i]['cdid'];
-            $delete = $cdrepo->find($cartid);
-            $entity->remove($delete);
-            $entity->flush($delete);
-        }
-
-        return $this->redirectToRoute('home_page');
     }
 }
