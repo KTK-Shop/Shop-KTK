@@ -31,7 +31,7 @@ class RegisterController extends AbstractController
             $data=$form->getData();
             $userName = $data->getUsername();
             $checkSameUser = $urepo->checkSameUser($userName);
-            // if($checkSameUser[0]['count']==0){
+            if($checkSameUser[0]['count']==0){
                 $user->setPassword($hasher->hashPassword($user,
             $form->get('password')->getData()));
 
@@ -52,13 +52,13 @@ class RegisterController extends AbstractController
             $entity->persist($cart);
             $entity->flush();
             return $this->redirectToRoute('app_login');
-            // }
-            // else{
-            //     $error = 1;
-            //     return $this->render('register/index.html.twig', [
-            //         'form' => $form->createView(), 'error' => $error
-            //     ]);
-            // }           
+            }
+            else{
+                $error = 1;
+                return $this->render('register/index.html.twig', [
+                    'form' => $form->createView(), 'error' => $error
+                ]);
+            }           
         }
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(), 
