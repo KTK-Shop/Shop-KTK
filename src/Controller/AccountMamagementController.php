@@ -26,6 +26,7 @@ class AccountMamagementController extends AbstractController
         return $this->render('account_mamagement/index.html.twig', [
             'account' => $account
         ]);
+        // return $this->json($account);
     }
 
     /**
@@ -33,18 +34,22 @@ class AccountMamagementController extends AbstractController
      */
     public function registerAction(Request $req, 
     UserPasswordHasherInterface $hasher,
-    ManagerRegistry $reg): Response
+    ManagerRegistry $reg, UserRepository $urepo): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($req);
         $entity = $reg->getManager();
+        $error = 0;
 
         if($form->isSubmitted() && $form->isValid()){
             $data=$form->getData();
+            $userName = $data->getUsername();
+            $checkSameUser = $urepo->checkSameUser($userName);
+
+            if($checkSameUser[0]['count']==0){
             $user->setPassword($hasher->hashPassword($user,
             $form->get('password')->getData()));
-
             $user->setRoles(['ROLE_ADMIN']);
             $user->setFullname($data->getFullname());
             $user->setGender($data->getGender());
@@ -63,10 +68,17 @@ class AccountMamagementController extends AbstractController
             $entity->flush();
 
             return $this->redirectToRoute('app_account_mamagement');
+            }
+            else{
+                $error = 1;
+                return $this->render('account_mamagement/add.html.twig', [
+                    'form' => $form->createView(), 'error' => $error
+                ]);
+            }
         }
 
         return $this->render('account_mamagement/add.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(), 'error' => $error
         ]);
     }
 }

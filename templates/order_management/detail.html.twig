@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<main style="min-height: calc(100vh - 116px - 56px - 246px);">
 
     <div id="main">
-                <div className="page-heading pb-2 mt-4 mb-2 ">
+                <div class="container">
                     <h3>Order Detail</h3>
                     <a href="{{path('app_order_management')}}"><button type="button" class="btn btn-outline-primary">Back to index</button></a>
                 </div>
@@ -39,4 +40,5 @@
              </div>
             </div>
     </div>
+    </main>
 {% endblock %}

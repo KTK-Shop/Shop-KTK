@@ -50,8 +50,12 @@ class HomeController extends AbstractController
     {
         $mess = $req->query->get('search');
         $product = $repo->findProductByName($mess);
+        $count = $repo->countProductByName($mess);
+        $counts = $count[0]['count']; 
         return $this->render("home_page/search.html.twig",[
-            'product' =>$product
+            'product' =>$product,
+            'count'=>$counts,
+            'mess'=>$mess
         ]);
     }
 

@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string")
      * @Assert\Length(
      * min = 8,
      * max = 25,

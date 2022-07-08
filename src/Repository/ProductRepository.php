@@ -72,6 +72,21 @@ class ProductRepository extends ServiceEntityRepository
       /**
     * @return Product[] Returns an array of Product objects
     */
+    public function countProductByName($productname)
+   {
+       return $this->createQueryBuilder('p')
+            ->select('COUNT(p.id) as count')
+           ->Where('p.Productname LIKE :productname')
+           ->setParameter('productname', "%${productname}%")
+           ->andWhere('p.Status = 1')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+      /**
+    * @return Product[] Returns an array of Product objects
+    */
     public function imageProduct($id)
     {
         $entity = $this->getEntityManager();

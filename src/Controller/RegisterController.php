@@ -31,8 +31,9 @@ class RegisterController extends AbstractController
             $data=$form->getData();
             $userName = $data->getUsername();
             $checkSameUser = $urepo->checkSameUser($userName);
+            
             if($checkSameUser[0]['count']==0){
-                $user->setPassword($hasher->hashPassword($user,
+            $user->setPassword($hasher->hashPassword($user,
             $form->get('password')->getData()));
 
             $user->setRoles(['ROLE_USER']);
