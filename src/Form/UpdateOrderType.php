@@ -39,8 +39,8 @@ class UpdateOrderType extends AbstractType{
         ])
         ->add('Status', ChoiceType::class, [
             'choices' => [
-                'Available' => '1',
-                'Unavailable' => '0',
+                'Delivered' => '1',
+                'Delivering' => '0',
             ],
             'expanded'=> true
         ])
