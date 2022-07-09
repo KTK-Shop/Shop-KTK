@@ -99,10 +99,14 @@ class CartController extends AbstractController
      * @Route("/updatecart/{id}", name="updatecart")
      */
     public function updateCartAction(int $id, ManagerRegistry $res, CartDetailRepository $caderepo
-    , Request $req, CartRepository $cartrepo): Response
+    , Request $req, CartRepository $cartrepo, ProductRepository $prorepo): Response
     {
         $quantity = $req->query->get('quantity');
         
+        $proquan = $caderepo->checkUpdateCart($id);
+        $quan = $proquan[0]['proquantity'];
+        
+        if($quantity <= $quan){
         $entity = $res->getManager();
         
         $cartdetail = $caderepo->find($id);
@@ -111,6 +115,25 @@ class CartController extends AbstractController
         $entity->persist($cartdetail);
         $entity->flush();
         return $this->redirectToRoute('app_cart');
+        }
+        else{
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $a = $user->getId();
+            $cart = $cartrepo->findOneBy(['user'=>$a]);
+    
+            $carts = $cartrepo->showCart($a, $cart); 
+            $bc = $cartrepo->sumCart($a, $cart);
+            $n = $bc[0]['total'];
+    
+            $error = 2;
+    
+            return $this->render("cart/index.html.twig",[
+                'cart' =>$carts,
+                'total'=>$n,
+                'error' => $error
+            ]);
+        } 
+
     }
 
  /**

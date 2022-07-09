@@ -110,6 +110,21 @@ class CartDetailRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+    * @return CartDetail[] Returns an array of CartDetail objects
+    */
+    public function checkUpdateCart($idca)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('p.Productquantity as proquantity')
+            ->Where('c.id = :idca')
+            ->setParameter('idca', $idca)
+            ->innerJoin('c.product', 'p')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 //    /**
 //     * @return CartDetail[] Returns an array of CartDetail objects

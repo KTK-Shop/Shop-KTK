@@ -54,6 +54,21 @@ class ProductRepository extends ServiceEntityRepository
        ;
    }
 
+      /**
+    * @return Product[] Returns an array of Product objects
+    */
+    public function indexProductHome()
+    {
+        $entity = $this->getEntityManager();
+        return $entity->createQuery('
+        SELECT p.id, p.Productname, p.Price,
+        p.Productdes, p.Productquantity, p.Productimage
+        FROM App\Entity\Product p WHERE p.Status = 1 AND p.Productquantity > 0
+        ')
+        ->getArrayResult()
+        ;
+    }
+
    /**
     * @return Product[] Returns an array of Product objects
     */

@@ -4,6 +4,9 @@
 {% if error == 1 %}
   <div class="alert alert-danger">Please add a product to the cart before ordering!!!</div>
 {% endif %}
+{% if error == 2 %}
+  <div class="alert alert-danger">The product has reached the maximum quantity</div>
+{% endif %}
     <section class="h-100 h-custom" style="background-color: #f7f7f7;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -45,7 +48,7 @@
                 <div class="row mb-4 d-flex justify-content-between align-items-center">
                   <div class="col-md-2 col-lg-2 col-xl-2">
                     <img 
-                      src="./img/{{c.Productimage}}"
+                      src="../img/{{c.Productimage}}"
                       class="img-fluid rounded-3" alt="image not avaible">
                   </div>
                   <div class="col-md-3 col-lg-3 col-xl-3">
