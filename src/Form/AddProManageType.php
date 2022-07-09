@@ -9,11 +9,16 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Positive;
+
 
 class AddProManageType extends AbstractType{
     public function configureOptions(OptionsResolver $resolver)
@@ -29,8 +34,13 @@ class AddProManageType extends AbstractType{
             ->add('Productname', TextType::class, [
                 'label' => 'Product Name'
             ])
-            ->add('Price', TextType::class, [
-                'label' => 'Product Price'
+            ->add('price', IntegerType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [new Positive()],
+                'attr' => [
+                'min' => 0
+                ]
             ])
             ->add('Productdes',  TextareaType::class, [
                 'attr' => ['class' => 'tinymce'],
@@ -40,7 +50,7 @@ class AddProManageType extends AbstractType{
                 'widget' => 'single_text',
                 'label' => 'Product Date'
             ])
-            ->add('Productquantity', TextType::class, [
+            ->add('Productquantity', NumberType::class, [
                 'label' => 'Product Quantity'
             ])
             ->add('Productimage', FileType::class, [
