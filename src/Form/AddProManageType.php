@@ -35,8 +35,6 @@ class AddProManageType extends AbstractType{
                 'label' => 'Product Name'
             ])
             ->add('price', IntegerType::class, [
-                'mapped' => false,
-                'required' => false,
                 'constraints' => [new Positive()],
                 'attr' => [
                 'min' => 0
