@@ -36,7 +36,11 @@
                                     {% endif %}
                                     <td>{{o.Address}}</td>
                                     <td>{{o.Payment}}</td>
-                                    <td>{{o.Status}}</td>
+                                    {% if o.Status == 0 %}
+                                    <td>Delivering</td>
+                                    {% else %}
+                                    <td>Delivered</td>
+                                    {% endif %}
                                     <td>{{o.user}}</td>          
                                     <td>
                                         <a href="{{ path('updateorder', {'id' : o.Oid})}}" class="btn rounded-pill text-light" style="background-color: rgba(26,148,255,255);"> Update </a>
